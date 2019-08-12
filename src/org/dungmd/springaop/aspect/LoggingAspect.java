@@ -1,5 +1,9 @@
 package org.dungmd.springaop.aspect;
 
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -28,5 +32,38 @@ public class LoggingAspect {
     @Before("allGetters()")
     public void allGetterAdvice2() {
         System.out.println("Getter method called 2");        
-    }    
+    }
+    
+    @Pointcut("within(org.dungmd.springaop.model.Circle)")
+    public void allCircleMethods() {}
+    
+    @After("allCircleMethods() && allGetters()")
+    public void afterCircleGetMethods() {
+        System.out.println("afterCircleGetMethods: Circle method called");
+    }
+
+    @After("allCircleMethods()")
+    public void afterCircleMethods(JoinPoint joinPoint) {
+        System.out.println("afterCircleMethods: " + joinPoint.getTarget());
+    }
+
+    @Before("args(name)")
+    public void beforeStringArgMethods(String name) {
+        System.out.println("beforeStringArgMethods: arg: " + name);
+    }
+
+    @After("args(name)")
+    public void afterStringArgMethods(String name) {
+        System.out.println("afterStringArgMethods: arg: " + name);
+    }
+
+    @AfterReturning(pointcut = "args(name)", returning = "returnedString")
+    public void afterStringArgMethodsReturned(String name, String returnedString) {
+        System.out.println("afterStringArgMethodsReturned: arg: " + name + ", returned: " + returnedString);
+    }
+    
+    @AfterThrowing(pointcut = "args(name)", throwing = "ex")
+    public void afterStringArgMethodsException(String name, Exception ex) {
+        System.out.println("afterStringArgMethodsException: arg: " + name + " - ex: " + ex.getMessage());
+    }
 }

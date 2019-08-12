@@ -10,6 +10,13 @@ public class Circle {
 
     public void setName(String name) {
         this.name = name;
+        System.out.println("Circle setName called: " + name);
+        throw (new RuntimeException("Circle set throwing"));
     }
 
+    public String setNameAndReturn(String name) {
+        this.name = name;
+        System.out.println("Circle setNameAndReturn called: " + name);
+        return name + " modified";
+    }
 }
