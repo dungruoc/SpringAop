@@ -26,4 +26,11 @@
     
     <bean id="shapeService" class="org.dungmd.springaop.service.ShapeService" autowire="byName" />
     <bean name="loggingAspect" class="org.dungmd.springaop.aspect.LoggingAspect" />
+    <bean name="loggingA" class="org.dungmd.springaop.aspect.Logging" />
+    <aop:config>
+    	<aop:aspect id="loggingA" ref="loggingA">
+    		<aop:pointcut expression="execution(* get*(..))" id="allGetters"/>
+    		<aop:around method="log" pointcut-ref="allGetters"/>
+    	</aop:aspect>
+    </aop:config>
 </beans>

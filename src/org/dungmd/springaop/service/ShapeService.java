@@ -1,5 +1,6 @@
 package org.dungmd.springaop.service;
 
+import org.dungmd.springaop.aspect.Loggable;
 import org.dungmd.springaop.model.Circle;
 import org.dungmd.springaop.model.Triangle;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ public class ShapeService {
     private Circle circle;
     private Triangle triangle;
 
+    @Loggable
     public Circle getCircle() {
         return circle;
     }
